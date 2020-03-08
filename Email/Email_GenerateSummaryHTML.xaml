@@ -1,0 +1,172 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="SendSummaryEmail" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_dt_SummaryEmail" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_str_BannerUrl" Type="InArgument(x:String)" />
+    <x:Property Name="in_str_ThemeColor" Type="InArgument(x:String)" />
+    <x:Property Name="in_str_EmailText" Type="InArgument(x:String)" />
+    <x:Property Name="in_str_EmailTitle" Type="InArgument(x:String)" />
+    <x:Property Name="out_str_SummaryEmailHtml" Type="OutArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>500,2133</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>SendSummaryEmail_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="22">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="32">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Email_GenerateSummaryHTML.xaml&#xA;Author: https://github.com/crystalyun&#xD;&#xA;Repository: https://github.com/rpahero/uipath-reusable-components&#xA;Description: Generates an HTML email based on a responsive summary email template, that includes VML for Outlook compatibility.  The summary table is four columns (1:1:1:3) wide and populated from a Datatable input.&#xA;&#xA;Arguments:&#xA;- in_dt_SummaryEmail: the datatable used to populate the summary table in the email.  All headings and content will be copied.&#xA;- in_str_BannerUrl: the URL of the banner image (~800px wide).&#xA;- in_str_ThemeColor: the hex code starting with #, for the accent color theme applied to the email.&#xA;- in_str_EmailTitle: the title of the email displayed just below the banner image.&#xA;- in_str_EmailText: the text displayed in the email just below the &quot;Hello there&quot; salutation.&#xA;- out_str_SummaryEmailHtml: the output HTML template, which can be inserted into the &quot;Body&quot; field of UiPath Send Email activities.&#xA;&#xA;Throws:&#xA;- System.Exception: Generic exception due to missing/invalid inputs.&#xA;&#xA;Outcome:&#xA;- Success: Builds working HTML email as output.&#xA;- Failure: Fails to build working HTML email as output, with possible exceptions triggered." DisplayName="Email_GenerateSummaryHTML" sap:VirtualizedContainerService.HintSize="480,2033" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="str_EmailHeader" />
+      <Variable x:TypeArguments="x:String" Name="in_str_EmailTemplateFolder" />
+      <Variable x:TypeArguments="x:String" Name="str_SummaryTable" />
+      <Variable x:TypeArguments="x:String" Name="str_EmailBody" />
+      <Variable x:TypeArguments="x:String" Name="str_EmailFooter" />
+      <Variable x:TypeArguments="s:String[]" Name="array_str_ColumnNames" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="438,1539" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <Sequence DisplayName="Generate Email Template" sap:VirtualizedContainerService.HintSize="396,1312" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:ReadTextFile Content="[str_EmailHeader]" DisplayName="Read Email Header Template" FileName="[in_str_EmailTemplateFolder + &quot;\Header.html&quot;]" sap:VirtualizedContainerService.HintSize="354,132" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+          <ui:ReadTextFile Content="[str_EmailBody]" DisplayName="Read Email Body Template" FileName="[in_str_EmailTemplateFolder + &quot;\Body.html&quot;]" sap:VirtualizedContainerService.HintSize="354,132" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
+          <ui:ReadTextFile Content="[str_EmailFooter]" DisplayName="Read Email Footer Template" FileName="[in_str_EmailTemplateFolder + &quot;\Footer.html&quot;]" sap:VirtualizedContainerService.HintSize="354,132" sap2010:WorkflowViewState.IdRef="ReadTextFile_3" />
+          <Assign sap:VirtualizedContainerService.HintSize="354,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_SummaryTable]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">
+                <Literal x:TypeArguments="x:String" Value="" />
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap:VirtualizedContainerService.HintSize="354,64" sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="s:String[]">[array_str_ColumnNames]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="s:String[]" xml:space="preserve">[(From dc In in_dt_SummaryEmail.Columns.Cast(Of DataColumn)
+Select dc.ColumnName).ToArray()]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap:VirtualizedContainerService.HintSize="354,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_EmailHeader]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[str_EmailHeader.Replace("1stColumnHeading", array_str_ColumnNames(0)).Replace("2ndColumnHeading", array_str_ColumnNames(1)).Replace("3rdColumnHeading", array_str_ColumnNames(2)).Replace("4thColumnHeading", array_str_ColumnNames(3)).Replace("ImageUrl", in_str_BannerUrl).Replace("ThemeColor",in_str_ThemeColor).Replace("EmailTitle", in_str_EmailTitle).Replace("EmailText", in_str_EmailText)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[in_dt_SummaryEmail]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="354,300" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <ui:ForEachRow.Body>
+              <ActivityAction x:TypeArguments="sd:DataRow">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Name="str_1stColumn" />
+                    <Variable x:TypeArguments="ui:GenericValue" Name="str_2ndColumn" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[str_SummaryTable]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[str_SummaryTable + str_EmailBody.Replace("1stColumnText", row(array_str_ColumnNames(0)).ToString).Replace("2ndColumnText", row(array_str_ColumnNames(1)).ToString).Replace("3rdColumnText", row(array_str_ColumnNames(2)).ToString).Replace("4thColumnText", row(array_str_ColumnNames(3)).ToString)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </ActivityAction>
+            </ui:ForEachRow.Body>
+          </ui:ForEachRow>
+          <Assign sap:VirtualizedContainerService.HintSize="354,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[out_str_SummaryEmailHtml]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[str_EmailHeader + str_SummaryTable + str_EmailFooter]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Throw Exception="[New SystemException(&quot;Failed to generate HTML for Summary Email.  Please correct any missing or invalid inputs.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>

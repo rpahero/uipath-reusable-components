@@ -1,0 +1,137 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Concur_Admin_NavigateTo_UserProfile" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_str_UserProfileUrl" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>560,1761</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Concur_Admin_NavigateTo_UserProfile_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Concur_Admin_NavigateTo_ExpenseUserProfile.xaml&#xA;Author: https://github.com/crystalyun&#xD;&#xA;Repository: https://github.com/rpahero/uipath-reusable-components&#xA;Description: Programmatically navigates to the Concur User Profile page for an Expense User using the Javascript URL as the input.  This is achieved by invoking JS to emulate a POST request within the restricted DOM of the UiPath Chrome Extension, with the CUUID and CESEmpKey as the payload.  The main use case for this script is to immediately access the user's profile in the future without having to repeat the entire search flow again.&#xD;&#xA;&#xD;&#xA;Important Notice:&#xD;&#xA;- This is just a proof of concept for proving the speed and reliability advantages of programmatic navigation compared to replicating user actions.  UI Automation for Concur is NOT RECOMMENDED as Concur API and/or FTP File Imports are far more effective solutions.&#xD;&#xA;&#xD;&#xA;Compatible Browers:&#xD;&#xA;- Google Chrome ONLY&#xD;&#xA;&#xD;&#xA;Arguments:&#xA;- io_browser_Concur: the browser object used for Concur automation&#xD;&#xA;- in_str_UserProfileUrl: the javascript URL for the Expense User Profile found on the search results page.&#xD;&#xA;&#xD;&#xA;Throws:&#xD;&#xA;- System.Exception: Failed to load Expense User Profile page after 3 attempts.&#xD;&#xA;&#xA;Outcome: &#xD;&#xA;- Success: Navigates to the Expense User Profile page.&#xD;&#xA;- Failure: Fails to navigate to the Expense User Profile page, and triggers system exception." DisplayName="Concur_Admin_NavigateTo_ExpenseUserProfile" sap:VirtualizedContainerService.HintSize="540,1661" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="498,1137" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="460,910" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="3" RetryInterval="00:00:05">
+          <ui:RetryScope.ActivityBody>
+            <ActivityAction>
+              <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="418,683" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Sequence sap:VirtualizedContainerService.HintSize="376,591" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InjectJsScript InputParameter="{x:Null}" ScriptOutput="{x:Null}" DisplayName="Inject Js: Navigate to &quot;about:blank&quot;" sap:VirtualizedContainerService.HintSize="334,96" sap2010:WorkflowViewState.IdRef="InjectJsScript_1" ScriptCode="function(e) {&#xA;    window.document.write('Loading...');&#xA;&#x9;window.document.title='User Administration';&#xA;}">
+                    <ui:InjectJsScript.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;html app='chrome.exe' url='https://www.concursolutions.com/*' /&gt;" WaitForReady="INTERACTIVE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:InjectJsScript.Target>
+                  </ui:InjectJsScript>
+                  <ui:InjectJsScript ScriptOutput="{x:Null}" sap2010:Annotation.AnnotationText="The Expense User Profile cannot be accessed via a GET request using the UserId, CUUID and CESEmpKey parameters (unlike the Travel User Profile).&#xA;&#xA;Instead we emulate a POST request by constructing a form within the DOM of the UiPath Chrome Extension with the relevant parameters, ie:&#xA;Method: POST&#xA;Path: https://www.concursolutions.com/companyadmin/user_detail.asp&#xA;UserId':''&#xA;CUUID: from in_str_UserProfileUrl&#xA;CESEmpKey: from in_str_UserProfileUrl&#xA;&#xA;This javascript function submits the constructed form, which results in the browser navigating to the target Expense User Profile." DisplayName="Inject Js to navigate to Expense User Profile" sap:VirtualizedContainerService.HintSize="334,363" sap2010:WorkflowViewState.IdRef="InjectJsScript_2" InputParameter="[in_str_UserProfileUrl]" ScriptCode="function (e, in_str_UserProfileUrl) {&#xD;&#xA;var form = document.createElement('form');&#xD;&#xA;    cuuid = in_str_UserProfileUrl.split('\'')[1];&#xD;&#xA;&#x9;cesEmpKey = in_str_UserProfileUrl.split('\'')[3];&#xD;&#xA;    var params = {'UserId':'', 'CUUID': cuuid, 'CESEmpKey': cesEmpKey};&#xD;&#xA;    form.setAttribute('method', 'POST');&#xD;&#xA;    form.setAttribute('action', 'https://www.concursolutions.com/companyadmin/user_detail.asp');&#xD;&#xA;    form._submit_function_ = form.submit;&#xD;&#xA;    &#xD;&#xA;    for(var key in params) {&#xD;&#xA;        if(params.hasOwnProperty(key)) {&#xD;&#xA;            var hiddenField = document.createElement('input');&#xD;&#xA;            hiddenField.setAttribute('type', 'hidden');&#xD;&#xA;            hiddenField.setAttribute('name', key);&#xD;&#xA;            hiddenField.setAttribute('value', params[key]);&#xD;&#xA;            form.appendChild(hiddenField);&#xD;&#xA;         }&#xD;&#xA;    }&#xD;&#xA;&#xD;&#xA;    document.body.appendChild(form);&#xD;&#xA;    form._submit_function_();&#xD;&#xA;}">
+                    <ui:InjectJsScript.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;html app='chrome.exe' title='User Administration' /&gt;" WaitForReady="INTERACTIVE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:InjectJsScript.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InjectJsScript>
+                </Sequence>
+              </Sequence>
+            </ActivityAction>
+          </ui:RetryScope.ActivityBody>
+          <ui:RetryScope.Condition>
+            <ActivityFunc x:TypeArguments="x:Boolean">
+              <ui:UiElementExists Exists="{x:Null}" DisplayName="Element Exists Account Termination Date" sap:VirtualizedContainerService.HintSize="334,68" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+                <ui:UiElementExists.Target>
+                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;html app='chrome.exe' title='User Details' /&gt;&lt;webctrl id='AccountTerminationDate' tag='INPUT' /&gt;" TimeoutMS="10000" WaitForReady="INTERACTIVE" />
+                </ui:UiElementExists.Target>
+              </ui:UiElementExists>
+            </ActivityFunc>
+          </ui:RetryScope.Condition>
+        </ui:RetryScope>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="464,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Throw Exception="[New SystemException(&quot;Failed to load expense user profile after 3 retries.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>
